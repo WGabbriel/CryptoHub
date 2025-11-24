@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CryptoHub</string>
+    <string name="title_activity_crypto_details">CryptoDetailsActivity</string>
 </resources>

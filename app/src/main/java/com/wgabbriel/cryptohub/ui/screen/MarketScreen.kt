@@ -2,6 +2,12 @@
 
 package com.wgabbriel.cryptohub.ui.screen
 
+import android.app.Activity
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
+import android.widget.Toast
+import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.wgabbriel.cryptohub.CryptoDetailsActivity
 import com.wgabbriel.cryptohub.model.Crypto
 import com.wgabbriel.cryptohub.ui.viewmodel.MarketViewModel
 import java.text.NumberFormat
@@ -47,6 +54,7 @@ private fun MarketContent(cryptos: List<Crypto>) {
     val currencyFormatter = remember {
         NumberFormat.getCurrencyInstance(Locale.US).apply { maximumFractionDigits = 2 }
     }
+    val activity = LocalActivity.current as Activity
 
     LazyColumn(
         modifier = Modifier
@@ -55,7 +63,22 @@ private fun MarketContent(cryptos: List<Crypto>) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(cryptos, key = { it.id }) { crypto ->
-            CryptoMarketItem(crypto, currencyFormatter)
+            CryptoMarketItem(crypto, currencyFormatter, onclick = {
+                activity.startActivity(
+                    Intent(
+                        activity,
+                        CryptoDetailsActivity::class.java
+                    ).apply {
+                        putExtra("CRYPTO_ID", crypto.id)
+                        putExtra("CRYPTO_SYMBOL", crypto.symbol)
+                        putExtra("CRYPTO_NAME", crypto.name)
+                        putExtra("CRYPTO_DESCRIPTION", crypto.description)
+                        putExtra("CRYPTO_PRICE", crypto.currentPrice.toString())
+                        putExtra("CRYPTO_MARKET_CAP", crypto.marketCap.toString())
+                        putExtra("CRYPTO_CHANGE", crypto.priceChangePercentage24h)
+                    }.setFlags(FLAG_ACTIVITY_SINGLE_TOP)
+                )
+            })
         }
     }
 }
@@ -63,13 +86,13 @@ private fun MarketContent(cryptos: List<Crypto>) {
 @Composable
 private fun CryptoMarketItem(
     crypto: Crypto,
-    currencyFormatter: NumberFormat
+    currencyFormatter: NumberFormat,
+    onclick: () -> Unit
 ) {
     val isPositive = crypto.priceChangePercentage24h >= 0
     val changeColor =
         if (isPositive) Color.Green else Color.Red
-
-    Card {
+    Card(modifier = Modifier.clickable { onclick() }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
