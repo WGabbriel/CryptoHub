@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         val items = listOf(
                             BottomNavItem.MarketButton,
-                            BottomNavItem.PortfolioButton,
+                            BottomNavItem.AlertButton,
                         )
                         BottomNavBar(navController = navController, items)
                     },

@@ -1,11 +1,24 @@
 package com.wgabbriel.cryptohub.ui.screen
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +51,6 @@ fun CryptoDetailsScreen(crypto: Crypto?) {
             val colors = MaterialTheme.colorScheme
             val priceFormat = NumberFormat.getCurrencyInstance(Locale.US)
 
-            // Cards superiores
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -60,7 +72,6 @@ fun CryptoDetailsScreen(crypto: Crypto?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Estatísticas
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -79,13 +90,22 @@ fun CryptoDetailsScreen(crypto: Crypto?) {
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    StatRow("Máxima 24h", priceFormat.format(crypto.currentPrice.toDouble() * 1.04))
+                    StatRow(
+                        "Máxima 24h",
+                        priceFormat.format(crypto.currentPrice.toDouble() * 1.04)
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    StatRow("Mínima 24h", priceFormat.format(crypto.currentPrice.toDouble() * 0.94))
+                    StatRow(
+                        "Mínima 24h",
+                        priceFormat.format(crypto.currentPrice.toDouble() * 0.94)
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    StatRow("Máxima Histórica", priceFormat.format(crypto.currentPrice.toDouble() * 1.5))
+                    StatRow(
+                        "Máxima Histórica",
+                        priceFormat.format(crypto.currentPrice.toDouble() * 1.5)
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
 
                     StatRow(
@@ -95,111 +115,6 @@ fun CryptoDetailsScreen(crypto: Crypto?) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Portfólio
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Column(
-                    modifier = Modifier.padding(20.dp)
-                ) {
-                    Text(
-                        text = "Seu Portfólio",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = colors.onSurface
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    StatRow("Quantidade", "0.5 ${crypto.symbol}")
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    StatRow("Valor Atual", priceFormat.format(crypto.currentPrice.toDouble() * 0.5))
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    StatRow("Investido", "$30,000.00")
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Lucro/Prejuízo",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = colors.onSurface
-                        )
-                        Text(
-                            text = "$3,617.25(12.06%)",
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colors.primary
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Botões de ação
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier.weight(1f),
-                    contentPadding = PaddingValues(vertical = 16.dp)
-                ) {
-                    Text(
-                        text = "+ Adicionar Mais",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                }
-
-                OutlinedButton(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = colors.error
-                    ),
-                    contentPadding = PaddingValues(vertical = 16.dp)
-                ) {
-                    Text(
-                        text = "Remover",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Criar alerta
-            OutlinedButton(
-                onClick = { /* TODO */ },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = colors.secondary
-                ),
-                contentPadding = PaddingValues(vertical = 16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Notifications,
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Criar Alerta",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-            }
         }
     }
 }

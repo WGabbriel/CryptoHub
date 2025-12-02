@@ -7,12 +7,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import com.wgabbriel.cryptohub.ui.screen.MarketScreen
-import com.wgabbriel.cryptohub.ui.screen.PortfolioScreen
+import com.wgabbriel.cryptohub.ui.screen.AlertScreen
 
 @Composable
 fun MainNavHost(navController: NavHostController) {
     NavHost(navController, startDestination = Route.Market) {
         composable<Route.Market> { MarketScreen() }
-        composable<Route.Portfolio> { PortfolioScreen() }
+        composable<Route.Alert> { AlertScreen() }
     }
 }

@@ -1,5 +1,8 @@
 package com.wgabbriel.cryptohub.ui.nav
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -11,7 +14,7 @@ sealed interface Route {
     data object Market : Route
 
     @Serializable
-    data object Portfolio : Route
+    data object Alert : Route
 
 }
 
@@ -27,11 +30,11 @@ sealed class BottomNavItem(
             Route.Market
         )
 
-    data object PortfolioButton :
+    data object AlertButton :
         BottomNavItem(
-            "Portfólio",
-            { ImageVector.vectorResource(id = R.drawable.wallet) },
-            Route.Portfolio
+            "Alertas",
+            { Icons.Default.Notifications },
+            Route.Alert
         )
 
 }
